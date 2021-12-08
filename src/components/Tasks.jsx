@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function Tasks ({tasks}) {
     return tasks.map((task) => (
-        <p ke={task.id}>{task.text}</p>
+        <p key={task.id}>{task.text}</p>
     ));
 }
 

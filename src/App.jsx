@@ -24,7 +24,7 @@ const initialTasks = [
 function App() {
   return (
     <div className="container">
-      <Header />
+      <Header title="New Title" />
       <Tasks tasks={initialTasks}/>
     </div>
   );
