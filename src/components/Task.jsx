@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { FaTimes } from "react-icons/fa"
 
 
-function Task ({task, onToggle}) {
+function Task ({task, onToggle,onDelete}) {
 
     const containerClasses = "task " + (task.reminder ? "reminder" : "");
 
@@ -10,7 +10,7 @@ function Task ({task, onToggle}) {
         <div onDoubleClick={() => onToggle(task.id)} className={containerClasses}>
             <h3>
                 {task.text}
-                <FaTimes style={{color: "darkred", cursor: "pointer"}}  />
+                <FaTimes onClick={() => onDelete(task.id)} style={{color: "darkred", cursor: "pointer"}}  />
             </h3>
             <p>{task.day}</p>
         </div>
@@ -18,6 +18,7 @@ function Task ({task, onToggle}) {
 }
 
 Task.propTypes = {
+    onDelete: PropTypes.func.isRequired,
     onToggle: PropTypes.func.isRequired,
     task: PropTypes.shape({
         id: PropTypes.number.isRequired,
