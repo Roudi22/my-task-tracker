@@ -24,39 +24,37 @@ const initialTasks = [
 ];
 
 function App() {
+  const [tasks, setTasks] = React.useState(initialTasks);
+  const [showAdd, setShowAdd] = React.useState(false);
 
-  const [tasks,setTasks] = React.useState(initialTasks);
-
-  function toggleReminder (id) {
-    const newTasks = tasks.map((task) => (
-      task.id === id ? {...task, reminder: !task.reminder} : task
-    ));
+  function toggleReminder(id) {
+    const newTasks = tasks.map((task) =>
+      task.id === id ? { ...task, reminder: !task.reminder } : task
+    );
 
     setTasks(newTasks);
   }
 
-
-  function deleteTask (id) {
-    const newTasks = tasks.filter((task)=> task.id !== id);
+  function deleteTask(id) {
+    const newTasks = tasks.filter((task) => task.id !== id);
     setTasks(newTasks);
   }
 
-  function addTask (task) {
+  function addTask(task) {
     let id = 0;
     if (tasks.length > 0) {
-      id = tasks[tasks.length-1].id + 1;
+      id = tasks[tasks.length - 1].id + 1;
     }
 
-    const newTask = {...task, id};
+    const newTask = { ...task, id };
     setTasks([...tasks, newTask]);
   }
 
   return (
     <div className="container">
-      <Header />
-      <AddTask onSubmit={addTask} />
-      <Tasks onDelete={deleteTask} onToggle={toggleReminder} tasks={tasks}/>
-      
+      <Header onAdd={() => setShowAdd(!showAdd)} showAdd={showAdd} />
+      {showAdd && <AddTask onSubmit={addTask} />}
+      <Tasks onDelete={deleteTask} onToggle={toggleReminder} tasks={tasks} />
     </div>
   );
 }
