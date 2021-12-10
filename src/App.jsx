@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
 const initialTasks = [
   {
     id: 1,
@@ -40,10 +41,22 @@ function App() {
     setTasks(newTasks);
   }
 
+  function addTask (task) {
+    let id = 0;
+    if (tasks.length > 0) {
+      id = tasks[tasks.length-1].id + 1;
+    }
+
+    const newTask = {...task, id};
+    setTasks([...tasks, newTask]);
+  }
+
   return (
     <div className="container">
       <Header />
+      <AddTask onSubmit={addTask} />
       <Tasks onDelete={deleteTask} onToggle={toggleReminder} tasks={tasks}/>
+      
     </div>
   );
 }
