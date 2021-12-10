@@ -1,26 +1,32 @@
 import PropTypes from "prop-types";
 
+function Button({ children, onClick, color, type, block }) {
+  const btnClasses = "btn " + (block ? "btn-block" : "");
 
-function Button ({children, onClick , color}) {
-    return (
-        <button 
-        style={{backgroundColor: color}} 
-        onClick={onClick} 
-        className="btn">
-            {children}
-        </button>
-    );
+  return (
+    <button
+      style={{ backgroundColor: color }}
+      onClick={onClick}
+      className={btnClasses}
+      type={type}
+    >
+      {children}
+    </button>
+  );
 }
 
 Button.defaultProps = {
-    color: "steelblue",
-}
-
-Button.propTypes = {
-    children: PropTypes.node,
-    onClick: PropTypes.func,
-    color: PropTypes.string,
+  color: "steelblue",
+  block: false,
+  type: "button",
 };
 
+Button.propTypes = {
+  children: PropTypes.node,
+  onClick: PropTypes.func,
+  color: PropTypes.string,
+  type: PropTypes.string,
+  block: PropTypes.bool,
+};
 
 export default Button;
