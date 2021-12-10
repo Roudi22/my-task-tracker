@@ -96,3 +96,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.loading {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 24px;
+}
