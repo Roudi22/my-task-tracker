@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import EditTask from "./components/EditTask";
 
 function App() {
   const [tasks, setTasks] = React.useState([]);
   const [showAdd, setShowAdd] = React.useState(false);
 
   const [loading, setLoading] = useState(true);
-
+  const [showEdit, setShowEdit] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
   useEffect(() => {
     const data = localStorage.getItem("tasks");
     console.log(data);
@@ -21,6 +23,7 @@ function App() {
   }, []);
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    setShowEdit(false);
   }, [tasks]);
 
   function toggleReminder(id) {
@@ -46,14 +49,53 @@ function App() {
     setTasks([...tasks, newTask]);
   }
 
+  function setEditTask(id) {
+    const task = tasks.find((task) => task.id === id);
+    if (task) {
+      setShowAdd(false);
+      setSelectedTask({ ...task });
+      setShowEdit(true);
+    } else {
+      setShowEdit(false);
+    }
+  }
+
+  function editTask(task) {
+    const newTask = tasks.map((t) =>
+      t.id === task.id ? { ...t, ...task } : t
+    );
+
+    setTasks(newTask);
+    setShowEdit(false);
+  }
+
+  function toggleAdd() {
+    if (!showAdd) {
+      setShowEdit(false);
+    }
+    setShowAdd(!showAdd);
+  }
+
   if (loading) {
     return <p className="loading">Loading tasks...</p>;
   }
   return (
     <div className="container">
-      <Header onAdd={() => setShowAdd(!showAdd)} showAdd={showAdd} />
+      <Header onAdd={toggleAdd} showAdd={showAdd} />
       {showAdd && <AddTask onSubmit={addTask} />}
-      <Tasks onDelete={deleteTask} onToggle={toggleReminder} tasks={tasks} />
+      {showEdit && (
+        <EditTask
+          task={selectedTask}
+          onSubmit={editTask}
+          onCancel={() => setShowEdit(false)}
+        />
+      )}
+      <Tasks
+        onEdit={setEditTask}
+        onDelete={deleteTask}
+        onToggle={toggleReminder}
+        tasks={tasks}
+      />
     </div>
   );
 }
