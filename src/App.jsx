@@ -7,10 +7,10 @@ import EditTask from "./components/EditTask";
 function App() {
   const [tasks, setTasks] = React.useState([]);
   const [showAdd, setShowAdd] = React.useState(false);
-
   const [loading, setLoading] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+
   useEffect(() => {
     const data = localStorage.getItem("tasks");
     console.log(data);
