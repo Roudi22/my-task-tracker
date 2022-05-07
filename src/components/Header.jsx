@@ -6,7 +6,7 @@ function Header({ title, onAdd, showAdd }) {
     <header className="header">
       <h1>{title}</h1>
       <Button onClick={onAdd} color={showAdd ? "red" : "green"}>
-        {showAdd ? "Cancel" : "Add"}
+        {showAdd ? "Cancel" : "Add"} Hello
       </Button>
     </header>
   );
